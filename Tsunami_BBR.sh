@@ -259,6 +259,7 @@ install(){
 	check_kernel
 	dpkg_list
 	echo -e "${Info} 确认内核安装无误后, ${reboot}你的VPS, 开机后再次运行该脚本的第二项！"
+	reboot
 }
 
 start(){
