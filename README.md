@@ -16,7 +16,7 @@
 <div align=center><img src="https://raw.githubusercontent.com/leitbogioro/Force_Modified_BBR/master/3.jpg"/></div>
 <br />
 <p>5. If the end of script shows that "[Info] tcp_nanqinlang is installed ! [Info] tcp_nanqinlang is running !", the force modified BBR has been installed successfully.</p>
-<div align=center><img src="https://raw.githubusercontent.com/leitbogioro/Force_Modified_BBR/master/4.jpg"/>
+<div align=center><img src="https://raw.githubusercontent.com/leitbogioro/Force_Modified_BBR/master/4.jpg"/></div>
 
 # Platform Support
 - Debian 7+ ( i386 && amd64 )
