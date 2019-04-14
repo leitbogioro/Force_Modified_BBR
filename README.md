@@ -5,4 +5,4 @@
 <pre><code>wget --no-check-certificate -O Tsunami_BBR.sh https://git.io/fjmzL && bash Tsunami_BBR.sh</code></pre>
 
 # Platform Support
-- Debian 7+ (i386 && amd64)
+- Debian 7+ ( i386 && amd64 )
