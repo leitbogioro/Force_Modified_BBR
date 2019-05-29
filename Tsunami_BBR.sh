@@ -270,6 +270,7 @@ start(){
 	ver_current
 	sed -i '/net\.core\.default_qdisc/d' /etc/sysctl.conf
 	sed -i '/net\.ipv4\.tcp_congestion_control/d' /etc/sysctl.conf
+	echo -e "#Enable BBR Congestion Control Protocol" >> /etc/sysctl.conf
 	echo -e "\nnet.core.default_qdisc=fq" >> /etc/sysctl.conf
 	echo -e "net.ipv4.tcp_congestion_control=nanqinlang\c" >> /etc/sysctl.conf
 	sysctl -p
