@@ -278,6 +278,52 @@ start(){
 	rm -rf /home/tcp_nanqinlang
 }
 
+optimize(){
+    if [[ ! `cat /etc/rc.local | grep "ulimit -n 51200"` ]] || [ ! -d "/etc/rc.local" ]; then
+        ulimit -n 51200 && echo ulimit -n 51200 >> /etc/rc.local
+    fi
+
+    if [[ ! `cat /etc/security/limits.conf | grep "* soft nofile 51200"` ]]; then
+        echo "* soft nofile 51200" >> /etc/security/limits.conf
+    fi
+
+    if [[ ! `cat /etc/security/limits.conf | grep "* hard nofile 51200"` ]]; then
+        echo "* hard nofile 51200" >> /etc/security/limits.conf
+    fi
+
+    if [[ ! `cat /etc/sysctl.conf | grep "#TCP Optimizations"` ]]; then
+cat >> /etc/sysctl.conf<<-EOF
+#TCP Optimizations
+#Optimize File System Operation Performance
+fs.file-max = 51200
+net.core.rmem_max = 67108864
+net.core.wmem_max = 67108864
+net.core.rmem_default = 65536
+net.core.wmem_default = 65536
+net.core.netdev_max_backlog = 8192
+net.core.somaxconn = 8192
+#Enhance Network Transport/Exchange Performance
+net.ipv4.tcp_syncookies = 1
+net.ipv4.tcp_tw_reuse = 1
+net.ipv4.tcp_tw_recycle = 0
+net.ipv4.tcp_fin_timeout = 600
+net.ipv4.tcp_keepalive_time = 10800
+net.ipv4.tcp_max_syn_backlog = 8192
+net.ipv4.tcp_max_tw_buckets = 5000
+net.ipv4.tcp_fastopen = 3
+net.ipv4.tcp_mem = 25600 51200 102400
+net.ipv4.tcp_rmem = 4096 87380 67108864
+net.ipv4.tcp_wmem = 4096 65536 67108864
+net.ipv4.tcp_mtu_probing = 1
+net.ipv4.ip_local_port_range = 1 65536
+#END OF LINE
+EOF
+    fi
+    
+    echo "Optimizations are finished, exiting......"
+    exit 1
+}
+
 status(){
 	check_status
 }
@@ -292,10 +338,10 @@ uninstall(){
 }
 
 echo -e "${Info} 选择你要使用的功能: "
-echo -e "1.安装内核\n2.安装并开启算法\n3.检查算法运行状态\n4.卸载算法"
+echo -e "1.安装内核\n2.安装并开启算法\n3.优化网络参数\n4.检查算法运行状态\n5.卸载算法"
 read -p "输入数字以选择:" function
 
-while [[ ! "${function}" =~ ^[1-4]$ ]]
+while [[ ! "${function}" =~ ^[1-5]$ ]]
 	do
 		echo -e "${Error} 无效输入"
 		echo -e "${Info} 请重新选择" && read -p "输入数字以选择:" function
@@ -306,6 +352,8 @@ if   [[ "${function}" == "1" ]]; then
 elif [[ "${function}" == "2" ]]; then
 	start
 elif [[ "${function}" == "3" ]]; then
+        optimize
+elif [[ "${function}" == "4" ]]; then
 	status
 else
 	uninstall
