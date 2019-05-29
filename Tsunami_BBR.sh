@@ -298,6 +298,7 @@ optimize(){
     fi
 
     if [[ ! `cat /etc/sysctl.conf | grep "#TCP Optimizations"` ]]; then
+        echo -e '\n' >> /etc/sysctl.conf
 cat >> /etc/sysctl.conf<<-EOF
 #TCP Optimizations
 #Optimize File System Operation Performance
