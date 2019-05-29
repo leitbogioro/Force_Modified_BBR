@@ -297,7 +297,7 @@ optimize(){
         echo "* hard nofile 51200" >> /etc/security/limits.conf
     fi
 
-    if [[ ! `cat /etc/sysctl.conf | grep "#TCP Optimizations"` ]]; then
+    if [[ ! `cat /etc/sysctl.conf | grep "#TCP Optimizations"` ]] && [[ ! `cat /etc/sysctl.conf | grep "fs.file-max = 51200"` ]]; then
         echo -e '\n' >> /etc/sysctl.conf
 cat >> /etc/sysctl.conf<<-EOF
 #TCP Optimizations
