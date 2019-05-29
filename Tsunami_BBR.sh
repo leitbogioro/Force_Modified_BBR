@@ -326,7 +326,7 @@ net.ipv4.ip_local_port_range = 1 65536
 #END OF LINE
 EOF
     fi
-    sysctl -p
+    sysctl -p >/dev/null 2>&1
     echo "Optimizations are finished, exiting......"
     exit 1
 }
