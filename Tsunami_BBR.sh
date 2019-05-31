@@ -49,12 +49,23 @@ directory(){
 }
 
 get_version(){
-    wget -O ${cert_file} ${kernel_url}${sort}
+        wget -O ${cert_file} ${kernel_url}${sort}
 	get_kernel_ver=`awk '{print $5}' index | grep "v4.9." | sed -n '$p' | sed -r 's/.*href=\"(.*)\">v4.9.*/\1/' | sed 's/.$//' | sed 's/^.//g'`
-	echo -e "${Info} 输入你想要的内核版本号(仅支持版本号: 4.9.3 ~ 4.13.16，目前 4.9.179 存在问题，选择 4.9.179 版本会被自动替换成 4.9.178):"
-	read -p "(输入版本号，例如: ${get_kernel_ver}，默认安装 v${get_kernel_ver}):" required_version
-	[[ -z "${required_version}" ]] && required_version=${get_kernel_ver}
-	rm -rf ${cert_file}
+	get_ver_legacy=${get_kernel_ver}
+	wget -O downloadpage ${kernel_url}v${get_kernel_ver}
+	while [[ ! `grep -i ".deb" downloadpage` ]]
+	do
+    	    rm -rf downloadpage
+    	    kernel_ver_last=($(echo ${get_kernel_ver} | awk -F '.' '{print $3}'))
+            ver_num=`expr $kernel_ver_last - 1`
+            wget -O downloadpage ${kernel_url}v4.9.${ver_num}
+	done
+	rm -rf downloadpage
+        rm -rf ${cert_file}
+	latest_kernel_ver="v4.9.${ver_num}"
+	echo -e "${Info} 输入你想要的内核版本号(仅支持版本号: 4.9.3 ~ 4.13.16，某些版本号由于无人编译，网站并未释出对应的内核包可供下载，故该脚本将自动向上一个版本追溯，直至找到有下载资源的内核版本为止):"
+	read -p "(输入版本号，例如受长期支持的 4.9.X 内核系列的最新版本: ${latest_kernel_ver}，直接按回车键，默认安装此版本):" required_version
+	[[ -z "${required_version}" ]] && required_version=${latest_kernel_ver}
 }
 
 get_url(){
