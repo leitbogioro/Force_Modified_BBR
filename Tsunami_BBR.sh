@@ -64,7 +64,7 @@ get_version(){
         rm -rf ${cert_file}
 	latest_kernel_ver="4.9.${ver_num}"
 	echo -e "${Info} Type which version you'd like to upgrade(Only support: 4.9.3 ~ 4.13.16, Because of some versions are not compiled by Ubuntu official and the download recourses are not available so we must backtrack to previous version one after another until we have found an available version:"
-	read -p "(输入版本号，例如受长期支持的 4.9.X 内核系列的最新版本: ${latest_kernel_ver}，直接按回车键，默认安装此版本):" required_version
+	read -p "(Type version number，For example: ${Green_font}${latest_kernel_ver}${Font_suffix} is the latest version of 4.9.X series which is a Long-term support version, type enter to install this version by default):" required_version
 	[[ -z "${required_version}" ]] && required_version=${latest_kernel_ver}
 }
 
@@ -206,11 +206,11 @@ check_kernel(){
 }
 
 dpkg_list(){
-	echo -e "${Info} 这是当前已安装的所有内核的列表："
+	echo -e "${Info} This following list includes all installed kernels:"
     dpkg -l | grep linux-image   | awk '{print $2}'
     dpkg -l | grep linux-headers | awk '{print $2}'
-	echo -e "${Info} 这是需要安装的所有内核的列表：\nlinux-image-${required_version}-lowlatency\nlinux-headers-${required_version}\nlinux-headers-${required_version}-lowlatency"
-	echo -e "${Info} 请确保上下两个列表一致！"
+	echo -e "${Info} This is the list includes all kernels need to be installed: \nlinux-image-${required_version}-lowlatency\nlinux-headers-${required_version}\nlinux-headers-${required_version}-lowlatency"
+	echo -e "${Info} Make sure two lists are completely consistent!"
 }
 
 ver_current(){
@@ -269,7 +269,7 @@ install(){
 	libssl
 	check_kernel
 	dpkg_list
-	echo -e "${Info} Finish replaced kernel, ${reboot}你的VPS, 开机后再次运行该脚本的第二项！"
+	echo -e "${Info} Finish replaced kernel, ${reboot} your machine, execute the second action of this script when you re-login as root!"
 	reboot
 }
 
@@ -349,14 +349,14 @@ uninstall(){
 	echo -e "${Info} please remember ${reboot} to stop tcp_nanqinlang !"
 }
 
-echo -e "${Info} 选择你要使用的功能: "
-echo -e "1.安装内核\n2.安装并开启算法\n3.优化网络参数\n4.检查算法运行状态\n5.卸载算法"
-read -p "输入数字以选择:" function
+echo -e "${Info} Select one: "
+echo -e "1.Replace a new kernel.\n2.Enable enhanced BBR module.\n3.Optimize network.\n4.Check if modification is running.\n5.Uninstall"
+read -p "Type number:" function
 
 while [[ ! "${function}" =~ ^[1-5]$ ]]
 	do
-		echo -e "${Error} 无效输入"
-		echo -e "${Info} 请重新选择" && read -p "输入数字以选择:" function
+		echo -e "${Error} Invalid input!"
+		echo -e "${Info} Reselect" && read -p "Type number:" function
 	done
 
 if   [[ "${function}" == "1" ]]; then
