@@ -62,7 +62,7 @@ get_version(){
 	done
 	rm -rf downloadpage
         rm -rf ${cert_file}
-	latest_kernel_ver="v4.9.${ver_num}"
+	latest_kernel_ver="4.9.${ver_num}"
 	echo -e "${Info} 输入你想要的内核版本号(仅支持版本号: 4.9.3 ~ 4.13.16，某些版本号由于无人编译，网站并未释出对应的内核包可供下载，故该脚本将自动向上一个版本追溯，直至找到有下载资源的内核版本为止):"
 	read -p "(输入版本号，例如受长期支持的 4.9.X 内核系列的最新版本: ${latest_kernel_ver}，直接按回车键，默认安装此版本):" required_version
 	[[ -z "${required_version}" ]] && required_version=${latest_kernel_ver}
