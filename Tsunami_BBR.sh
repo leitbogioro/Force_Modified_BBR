@@ -52,13 +52,7 @@ get_version(){
     wget -O ${cert_file} ${kernel_url}${sort}
 	get_kernel_ver=`awk '{print $5}' index | grep "v4.9." | sed -n '$p' | sed -r 's/.*href=\"(.*)\">v4.9.*/\1/' | sed 's/.$//' | sed 's/^.//g'`
 	echo -e "${Info} 输入你想要的内核版本号(仅支持版本号: 4.9.3 ~ 4.13.16，目前 4.9.179 存在问题，选择 4.9.179 版本会被自动替换成 4.9.178):"
-	if [[ ${get_kernel_ver} == "4.9.179" ]]; then
-	    get_kernel_ver="4.9.178"
-	fi
 	read -p "(输入版本号，例如: ${get_kernel_ver}，默认安装 v${get_kernel_ver}):" required_version
-	if [[ ${required_version} == "4.9.179" ]]; then
-	    required_version="4.9.178"
-	fi
 	[[ -z "${required_version}" ]] && required_version=${get_kernel_ver}
 	rm -rf ${cert_file}
 }
