@@ -15,7 +15,7 @@
 <br />
 <p><b>4.</b> Log into your server and execute the shell again, type "2" then enter:</p>
 <pre><code>bash Tsunami_BBR.sh</code></pre>
-<div align=center><img src="https://raw.githubusercontent.com/leitbogioro/Force_Modified_BBR/master/3.jpg"/></div>
+<div align=center><img src="https://raw.githubusercontent.com/leitbogioro/Force_Modified_BBR/master/3(1).jpg"/></div>
 <br />
 <br />
 <p><b>5.</b> If the end of script shows that "[Info] tcp_nanqinlang is installed ! [Info] tcp_nanqinlang is running !", the force modified BBR has been installed successfully.</p>
