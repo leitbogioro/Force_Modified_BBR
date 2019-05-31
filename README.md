@@ -10,7 +10,7 @@
 <br />
 <br />
 <p><b>3.</b> Then type a Linux kernel version(like "4.11.12" etc.) or type "enter" key(default is the latest version of 4.9.X series kernel), once installation succeed, it will automatically restart your server.<p>
-<div align=center><img src="https://raw.githubusercontent.com/leitbogioro/Force_Modified_BBR/master/2.png"/></div>
+<div align=center><img src="https://raw.githubusercontent.com/leitbogioro/Force_Modified_BBR/master/2.jpg"/></div>
 <br />
 <br />
 <p><b>4.</b> Log into your server and execute the shell again, type "2" then enter:</p>
