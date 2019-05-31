@@ -63,8 +63,10 @@ get_version(){
 	rm -rf downloadpage
         rm -rf ${cert_file}
 	latest_kernel_ver="4.9.${ver_num}"
-	echo -e "${Info} Type which version you'd like to upgrade(Only support: 4.9.3 ~ 4.13.16, Because of some versions are not compiled by Ubuntu official and the download recourses are not available so we must backtrack to previous version one after another until we have found an available version:"
-	read -p "(Type version number，For example: ${Green_font}${latest_kernel_ver}${Font_suffix} is the latest version of 4.9.X series which is a Long-term support version, type enter to install this version by default):" required_version
+	echo -e "${Info}"
+	echo "Only support: 4.9.3 ~ 4.13.16, Because of some versions are not compiled by Ubuntu official and the download recourses are not available so we must backtrack to previous version one after another until we have found an available version."
+	echo -e "For example: ${Green_font}${latest_kernel_ver}${Font_suffix} is the latest version of 4.9.X series which is a Long-term support version, type enter to install this version by default"
+	read -p "(Type which version you'd like to upgrade):" required_version
 	[[ -z "${required_version}" ]] && required_version=${latest_kernel_ver}
 }
 
