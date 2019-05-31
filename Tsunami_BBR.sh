@@ -350,7 +350,7 @@ uninstall(){
 }
 
 echo -e "${Info} Select one: "
-echo -e "1.Replace a new kernel.\n2.Enable enhanced BBR module.\n3.Optimize network.\n4.Check if modification is running.\n5.Uninstall"
+echo -e "1.Upgrade to another kernel.\n2.Enable enhanced BBR module.\n3.Optimize network.\n4.Check if modification is running.\n5.Uninstall"
 read -p "Type number:" function
 
 while [[ ! "${function}" =~ ^[1-5]$ ]]
