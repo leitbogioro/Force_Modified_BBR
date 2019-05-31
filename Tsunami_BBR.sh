@@ -2,7 +2,7 @@
 Green_font="\033[32m" && Yellow_font="\033[33m" && Red_font="\033[31m" && Font_suffix="\033[0m"
 Info="${Green_font}[Info]${Font_suffix}"
 Error="${Red_font}[Error]${Font_suffix}"
-reboot="${Yellow_font}重启${Font_suffix}"
+reboot="${Yellow_font}Reboot${Font_suffix}"
 echo -e "${Green_font}
 #================================================
 # Project:  tcp_nanqinlang general
@@ -63,7 +63,7 @@ get_version(){
 	rm -rf downloadpage
         rm -rf ${cert_file}
 	latest_kernel_ver="4.9.${ver_num}"
-	echo -e "${Info} 输入你想要的内核版本号(仅支持版本号: 4.9.3 ~ 4.13.16，某些版本号由于无人编译，网站并未释出对应的内核包可供下载，故该脚本将自动向上一个版本追溯，直至找到有下载资源的内核版本为止):"
+	echo -e "${Info} Type which version you'd like to upgrade(Only support: 4.9.3 ~ 4.13.16, Because of some versions are not compiled by Ubuntu official and the download recourses are not available so we must backtrack to previous version one after another until we have found an available version:"
 	read -p "(输入版本号，例如受长期支持的 4.9.X 内核系列的最新版本: ${latest_kernel_ver}，直接按回车键，默认安装此版本):" required_version
 	[[ -z "${required_version}" ]] && required_version=${latest_kernel_ver}
 }
@@ -269,7 +269,7 @@ install(){
 	libssl
 	check_kernel
 	dpkg_list
-	echo -e "${Info} 确认内核安装无误后, ${reboot}你的VPS, 开机后再次运行该脚本的第二项！"
+	echo -e "${Info} Finish replaced kernel, ${reboot}你的VPS, 开机后再次运行该脚本的第二项！"
 	reboot
 }
 
