@@ -65,7 +65,7 @@ get_version(){
 	latest_kernel_ver="4.9.${ver_num}"
 	echo -e "${Info} Only support: 4.9.3 ~ 4.13.16, Because of some versions like ${Red_font}4.9.179${Font_suffix} is not compiled by Ubuntu official and the download recourses are not available so we must backtrack to some previous in succession until we have found an available one."
 	echo ""
-	echo -e "For example: ${Green_font}${latest_kernel_ver}${Font_suffix} is the latest version of 4.9.X series which belongs to Long-term support, type ${Yellow_font}Enter${Font_suffix} to install the above mentioned version by default."
+	echo -e "For example: ${Green_font}${latest_kernel_ver}${Font_suffix} is the latest version of 4.9.X series which belongs to Long-term support, press ${Yellow_font}Enter${Font_suffix} key to install the above mentioned version by default."
 	echo ""
 	read -p "(Type which version you'd like to upgrade):" required_version
 	[[ -z "${required_version}" ]] && required_version=${latest_kernel_ver}
