@@ -30,3 +30,7 @@
 
 # Reference && Thanks
 https://github.com/tcp-nanqinlang
+
+# Updates
+- Search available 4.9.X series kernel and if press Enter key, the script will upgrade to this kernel automatically.
+- fix bugs.
