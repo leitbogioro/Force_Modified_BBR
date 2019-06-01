@@ -56,8 +56,8 @@ get_version(){
 	while [[ ! `grep -i ".deb" downloadpage` ]]
 	do
     	    rm -rf downloadpage
-    	    kernel_ver_last=($(echo ${get_kernel_ver} | awk -F '.' '{print $3}')) 180 
-            ver_num=`expr $kernel_ver_last - 1` 179
+    	    kernel_ver_last=($(echo ${get_kernel_ver} | awk -F '.' '{print $3}'))
+            ver_num=`expr $kernel_ver_last - 1`
 	    get_kernel_ver="4.9.${ver_num}"
             wget -O downloadpage ${kernel_url}v4.9.${ver_num} 
 	done
