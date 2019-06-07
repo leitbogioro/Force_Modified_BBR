@@ -32,5 +32,6 @@
 https://github.com/tcp-nanqinlang
 
 # Updates
+- Sometimes I can't speculate the rules of kernel releases from https://kernel.ubuntu.com/~kernel-ppa/mainline/?C=M;O=D, usually, the earlier version is corresponded to earlier release time strictly. But in v4.9.173, v4.9.179, v4.9.180 these three versions, the rule is invalid. If you visited the mentioned link above before June 6, v4.9.173 has been existed in 2~8 May, v4.9.179 should be existed before v4.9.180, but actually, the sequence is v4.9.173, v4.9.179, v4.9.180. I think it is really bad.
 - Search available 4.9.X series kernel and if press Enter key, the script will upgrade to this kernel automatically.
 - fix bugs.
