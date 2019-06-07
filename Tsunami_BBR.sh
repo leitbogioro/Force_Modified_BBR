@@ -50,20 +50,46 @@ directory(){
 
 get_version(){
         wget -O ${cert_file} ${kernel_url}${sort}
-	get_kernel_ver=`awk '{print $5}' index | grep "v4.9." | sed -n '$p' | sed -r 's/.*href=\"(.*)\">v4.9.*/\1/' | sed 's/.$//' | sed 's/^.//g'`
-	get_ver_legacy=${get_kernel_ver}
-	wget -O downloadpage ${kernel_url}v${get_kernel_ver}
+	#get_kernel_ver=`awk '{print $5}' index | grep "v4.9." | sed -n '$p' | sed -r 's/.*href=\"(.*)\">v4.9.*/\1/' | sed 's/.$//' | sed 's/^.//g'`
+	#get_ver_legacy=${get_kernel_ver}
+	get_kernel_ver=`awk '{print $5}' index | grep "v4.9." | tail -1 | head -n 1 | sed -r 's/.*href=\"(.*)\">v4.9.*/\1/' | sed 's/.$//' | sed 's/^.//g'`
+	
+	# 
+	declare -a kernel_ver=()
+        num=1
+        for(( i=0; i<=3; i++ )); do
+                get_kernel_ver=`awk '{print $5}' index | grep "v4.9." | tail -$num | head -n 1 | sed -r 's/.*href=\"(.*)\">v4.9.*/\1/' | sed 's/.$//' | sed 's/^.//g'`
+                num=`expr $num + 1`
+                ver_last=($(echo ${get_kernel_ver} | awk -F '.' '{print $3}'))
+                kernel_ver_last[$i]=`expr ${ver_last}`
+        done
+
+        len=${#kernel_ver_last[@]}
+        for(( i=0; i<$len; i++ )){
+                for((j=i+1; j<$len; j++)){
+                if [[ ${kernel_ver_last[i]} -lt ${kernel_ver_last[j]} ]]; then
+                        temp=${kernel_ver_last[i]}
+                        kernel_ver_last[i]=${kernel_ver_last[j]}
+                        kernel_ver_last[j]=$temp
+                fi
+                }
+        }
+
+        download_ver=${kernel_ver_last[0]}
+        wget -O downloadpage ${kernel_url}v4.9.${download_ver}
+        ver_sub=0
 	while [[ ! `grep -i ".deb" downloadpage` ]]
 	do
-    	    rm -rf downloadpage
-    	    kernel_ver_last=($(echo ${get_kernel_ver} | awk -F '.' '{print $3}'))
-            ver_num=`expr $kernel_ver_last - 1`
-	    get_kernel_ver="4.9.${ver_num}"
-            wget -O downloadpage ${kernel_url}v4.9.${ver_num} 
+        	rm -rf downloadpage
+        	ver_sub=`expr $ver_sub + 1`
+        	download_ver="${kernel_ver_last[$ver_sub]}"
+        	wget -O downloadpage ${kernel_url}v4.9.${download_ver}
 	done
+	
 	rm -rf downloadpage
         rm -rf ${cert_file}
-	latest_kernel_ver="4.9.${ver_num}"
+	
+	latest_kernel_ver="4.9.${download_ver}"
 	echo -e "${Info} Only support: 4.9.3 ~ 4.13.16, Because of some versions like ${Red_font}4.9.179${Font_suffix} is not compiled by Ubuntu official and the download recourses are not available so we must backtrack to some previous in succession until we have found an available one."
 	echo ""
 	echo -e "For example: ${Green_font}${latest_kernel_ver}${Font_suffix} is the latest version of 4.9.X series which belongs to Long-term support, press ${Yellow_font}Enter${Font_suffix} key to install the above mentioned kernel by default."
