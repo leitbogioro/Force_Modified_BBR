@@ -256,7 +256,7 @@ compiler(){
 	if [[ ! -z "${ver_4_13}" ]]; then
 		wget https://raw.githubusercontent.com/tcp-nanqinlang/general/master/General/Debian/source/kernel-v4.13/tcp_nanqinlang.c
 	else
-		wget https://raw.githubusercontent.com/tcp-nanqinlang/general/master/General/Debian/source/kernel-v4.12andbelow/tcp_nanqinlang.c
+		wget https://raw.githubusercontent.com/leitbogioro/Force_Modified_BBR/master/General/Debian/source/kernel-v4.12andbelow/tcp_nanqinlang.c
 	fi
 
 	[[ ! -f tcp_nanqinlang.c ]] && echo -e "${Error} failed download tcp_nanqinlang.c, please check !" && exit 1
