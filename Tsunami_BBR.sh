@@ -108,12 +108,12 @@ get_url(){
 		bit="amd64"
 		image_url="http://kernel.ubuntu.com/~kernel-ppa/mainline/v${required_version}/${bit}/${image_name}"
 		headers_bit_name=`wget -qO- http://kernel.ubuntu.com/~kernel-ppa/mainline/v${required_version}/ | grep "linux-headers" | grep "lowlatency" | awk -F'\">' '/amd64.deb/{print $2}' | cut -d'<' -f1 | head -1 | cut -d'/' -f2`
-		headers_bit_url="http://kernel.ubuntu.com/~kernel-ppa/mainline/v${required_version}/${headers_bit_name}"
+		headers_bit_url="http://kernel.ubuntu.com/~kernel-ppa/mainline/v${required_version}/${bit}/${headers_bit_name}"
 	elif [[ "${bit}" = "i386" ]]; then
 		image_name=`wget -qO- http://kernel.ubuntu.com/~kernel-ppa/mainline/v${required_version}/ | grep "linux-image" | grep "lowlatency" | awk -F'\">' '/i386.deb/{print $2}' | cut -d'<' -f1 | head -1 | cut -d'/' -f2`
 		image_url="http://kernel.ubuntu.com/~kernel-ppa/mainline/v${required_version}/${bit}/${image_name}"
 		headers_bit_name=`wget -qO- http://kernel.ubuntu.com/~kernel-ppa/mainline/v${required_version}/ | grep "linux-headers" | grep "lowlatency" | awk -F'\">' '/i386.deb/{print $2}' | cut -d'<' -f1 | head -1 | cut -d'/' -f2`
-		headers_bit_url="http://kernel.ubuntu.com/~kernel-ppa/mainline/v${required_version}/${headers_bit_name}"
+		headers_bit_url="http://kernel.ubuntu.com/~kernel-ppa/mainline/v${required_version}/${bit}/${headers_bit_name}"
 	else
 		echo -e "${Error} not support bit !" && exit 1
 	fi
