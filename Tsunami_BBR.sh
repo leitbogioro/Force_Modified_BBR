@@ -100,8 +100,8 @@ get_version(){
 
 get_url(){
 	get_version
-	headers_all_name=`wget -qO- http://kernel.ubuntu.com/~kernel-ppa/mainline/v${required_version}/ | grep "linux-headers" | awk -F'\">' '/all.deb/{print $2}' | cut -d'<' -f1 | head -1 | cut -d'/' -f2`
-	headers_all_url="http://kernel.ubuntu.com/~kernel-ppa/mainline/v${required_version}/${headers_all_name}"
+	#headers_all_name=`wget -qO- http://kernel.ubuntu.com/~kernel-ppa/mainline/v${required_version}/ | grep "linux-headers" | awk -F'\">' '/all.deb/{print $2}' | cut -d'<' -f1 | head -1 | cut -d'/' -f2`
+	#headers_all_url="http://kernel.ubuntu.com/~kernel-ppa/mainline/v${required_version}/${headers_all_name}"
 	bit=`uname -m`
 	if [[ "${bit}" = "x86_64" ]]; then
 		image_name=`wget -qO- http://kernel.ubuntu.com/~kernel-ppa/mainline/v${required_version}/ | grep "linux-image" | grep "lowlatency" | awk -F'\">' '/amd64.deb/{print $2}' | cut -d'<' -f1 | head -1 | cut -d'/' -f2`
@@ -182,14 +182,14 @@ install_image(){
 }
 
 install_headers(){
-	if [[ -f ${headers_all_name} ]]; then
-		 echo -e "${Info} deb file exist"
-	else echo -e "${Info} downloading headers_all" && wget ${headers_all_url}
-	fi
-	if [[ -f ${headers_all_name} ]]; then
-		 echo -e "${Info} installing headers_all" && dpkg -i ${headers_all_name}
-	else echo -e "${Error} headers_all download failed, please check !" && exit 1
-	fi
+	#if [[ -f ${headers_all_name} ]]; then
+		 #echo -e "${Info} deb file exist"
+	#else echo -e "${Info} downloading headers_all" && wget ${headers_all_url}
+	#fi
+	#if [[ -f ${headers_all_name} ]]; then
+		 #echo -e "${Info} installing headers_all" && dpkg -i ${headers_all_name}
+	#else echo -e "${Error} headers_all download failed, please check !" && exit 1
+	#fi
 
 	if [[ -f ${headers_bit_name} ]]; then
 		 echo -e "${Info} deb file exist"
