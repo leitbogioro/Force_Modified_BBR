@@ -397,7 +397,7 @@ if   [[ "${function}" == "1" ]]; then
 elif [[ "${function}" == "2" ]]; then
 	start
 elif [[ "${function}" == "3" ]]; then
-        optimize
+	optimize
 elif [[ "${function}" == "4" ]]; then
 	status
 else
