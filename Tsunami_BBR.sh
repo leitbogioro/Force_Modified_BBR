@@ -20,8 +20,6 @@ dpkg_updates="/var/lib/dpkg/updates"
 sort="?C=M;O=A"
 kernel_url="https://kernel.ubuntu.com/~kernel-ppa/mainline/"
 cert_file="index"
-d_file="/etc/init.d/DNSDeploy_Start_Debian.sh"
-d_file_url="https://raw.githubusercontent.com/leitbogioro/Force_Modified_BBR/master/DNSDeploy_Start_Debian.sh"
 
 check_system(){
 	#cat /etc/issue | grep -q -E -i "debian" && release="debian"
@@ -375,29 +373,6 @@ status(){
 	check_status
 }
 
-set_local_dns(){
-    rm -rf /etc/resolv.conf
-    cat > /etc/resolv.conf<<-EOF
-nameserver 1.0.0.1
-nameserver 8.8.4.4
-EOF
-}
-
-Write_apt_task() {
-    if [[ ! -f /etc/init.d/DNSDeploy_Start_Debian.sh ]]; then
-        wget ${d_file_url} -O ${d_file}
-	chmod 775 ${d_file}
-        update-rc.d DNSDeploy_Start_Debian.sh defaults 60
-    else
-        echo "Booting DNS resolution task had been setted, Aborting..."
-    fi
-}
-
-deploydns(){
-    set_local_dns
-    Write_apt_task
-}
-
 uninstall(){
 	check_root
 	sed -i '/net\.core\.default_qdisc=/d'          /etc/sysctl.conf
@@ -422,11 +397,9 @@ if   [[ "${function}" == "1" ]]; then
 elif [[ "${function}" == "2" ]]; then
 	start
 elif [[ "${function}" == "3" ]]; then
-    	optimize
+        optimize
 elif [[ "${function}" == "4" ]]; then
 	status
-elif [[ "${function}" == "5" ]]; then
-	deploydns
 else
 	uninstall
 fi
