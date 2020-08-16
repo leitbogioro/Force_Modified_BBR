@@ -38,9 +38,9 @@ check_kvm(){
     fi
 	apt-get update
 	apt-get install -y virt-what ca-certificates apt-transport-https -y 
-	#virt=`virt-what`
-	#[[ "${virt}" = "openvz" ]] && echo -e "${Error} OpenVZ not support !" && exit 1
-	[[ "`virt-what`" != "kvm" ]] && echo -e "${Error} only support KVM !" && exit 1
+	virt=`virt-what`
+	[[ "${virt}" = "openvz" ]] && echo -e "${Error} OpenVZ not support !" && exit 1
+	#[[ "`virt-what`" != "kvm" ]] && echo -e "${Error} only support KVM !" && exit 1
 }
 
 directory(){
