@@ -49,7 +49,7 @@ directory(){
 }
 
 get_version(){
-        wget --no-check-certificate -O index ${cert_file} ${kernel_url}${sort}
+        wget --no-check-certificate -O ${cert_file} ${kernel_url}${sort}
 	#get_kernel_ver=`awk '{print $5}' index | grep "v4.9." | sed -n '$p' | sed -r 's/.*href=\"(.*)\">v4.9.*/\1/' | sed 's/.$//' | sed 's/^.//g'`
 	#get_ver_legacy=${get_kernel_ver}
 	get_kernel_ver=`awk '{print $5}' index | grep "v4.9." | tail -1 | head -n 1 | sed -r 's/.*href=\"(.*)\">v4.9.*/\1/' | sed 's/.$//' | sed 's/^.//g'`
