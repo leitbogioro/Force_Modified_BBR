@@ -32,6 +32,7 @@
 https://github.com/tcp-nanqinlang
 
 # Updates
+- In Debian 9, When wget files from https://kernel.ubuntu.com, system notices that'The certificate of ‘kernel.ubuntu.com’ is not trusted.' because 'The certificate of ‘kernel.ubuntu.com’ has expired.' since component 'ca-certificates' has been installed, the valid time of certificate of https://kernel.ubuntu.com is 2 month left, and the date of system time is corret, if this error continues, this bash will not execute. So I added '--no-check-certificate' to concerned resource.
 - Fix downloading error.
 - Sometimes I can't speculate the rules of kernel releases from https://kernel.ubuntu.com/~kernel-ppa/mainline/?C=M;O=D, usually, the earlier version is corresponded to earlier release time strictly. But in v4.9.173, v4.9.179, v4.9.180 these three versions, the rule is invalid. If you visited the mentioned link above before June 6, v4.9.173 has been existed in 2~8 May, v4.9.179 should be existed before v4.9.180, but actually, the sequence is v4.9.173, v4.9.179, v4.9.180. I think it is really bad. To refer this situation, please view: https://web.archive.org/web/20190607005845/https://kernel.ubuntu.com/~kernel-ppa/mainline/?C=M;O=D
 - Search available 4.9.X series kernel and if press Enter key, the script will upgrade to this kernel automatically.
