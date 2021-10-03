@@ -37,7 +37,7 @@ check_kvm(){
 	    mkdir /var/lib/dpkg/updates
     fi
 	apt-get update
-	apt-get install -y virt-what ca-certificates apt-transport-https -y 
+	apt-get install virt-what ca-certificates apt-transport-https -y 
 	virt=`virt-what`
 	[[ "${virt}" = "openvz" ]] && echo -e "${Error} OpenVZ not support !" && exit 1
 	#[[ "`virt-what`" != "kvm" ]] && echo -e "${Error} only support KVM !" && exit 1
@@ -49,7 +49,7 @@ directory(){
 }
 
 get_version(){
-        wget -O ${cert_file} ${kernel_url}${sort}
+        wget --no-check-certificate ${cert_file} ${kernel_url}${sort}
 	#get_kernel_ver=`awk '{print $5}' index | grep "v4.9." | sed -n '$p' | sed -r 's/.*href=\"(.*)\">v4.9.*/\1/' | sed 's/.$//' | sed 's/^.//g'`
 	#get_ver_legacy=${get_kernel_ver}
 	get_kernel_ver=`awk '{print $5}' index | grep "v4.9." | tail -1 | head -n 1 | sed -r 's/.*href=\"(.*)\">v4.9.*/\1/' | sed 's/.$//' | sed 's/^.//g'`
@@ -76,14 +76,14 @@ get_version(){
         }
 
         download_ver=${kernel_ver_last[0]}
-        wget -O downloadpage ${kernel_url}v4.9.${download_ver}
+        wget --no-check-certificate downloadpage ${kernel_url}v4.9.${download_ver}
         ver_sub=0
 	while [[ ! `grep -i ".deb" downloadpage` ]]
 	do
         	rm -rf downloadpage
         	ver_sub=`expr $ver_sub + 1`
         	download_ver="${kernel_ver_last[$ver_sub]}"
-        	wget -O downloadpage ${kernel_url}v4.9.${download_ver}
+        	wget --no-check-certificate downloadpage ${kernel_url}v4.9.${download_ver}
 	done
 	
 	rm -rf downloadpage
@@ -102,19 +102,19 @@ get_url(){
 	get_version
 	bit=`uname -m`
 	if [[ "${bit}" = "x86_64" ]]; then
-		image_name=`wget -qO- http://kernel.ubuntu.com/~kernel-ppa/mainline/v${required_version}/ | grep "linux-image" | grep "lowlatency" | awk -F'\">' '/amd64.deb/{print $2}' | cut -d'<' -f1 | head -1 | cut -d'/' -f2`
+		image_name=`wget --no-check-certificate http://kernel.ubuntu.com/~kernel-ppa/mainline/v${required_version}/ | grep "linux-image" | grep "lowlatency" | awk -F'\">' '/amd64.deb/{print $2}' | cut -d'<' -f1 | head -1 | cut -d'/' -f2`
 		bit="amd64"
 		image_url="http://kernel.ubuntu.com/~kernel-ppa/mainline/v${required_version}/${bit}/${image_name}"
-		headers_all_name=`wget -qO- http://kernel.ubuntu.com/~kernel-ppa/mainline/v${required_version}/ | grep "linux-headers" | awk -F'\">' '/all.deb/{print $2}' | cut -d'<' -f1 | head -1 | cut -d'/' -f2`
+		headers_all_name=`wget --no-check-certificate http://kernel.ubuntu.com/~kernel-ppa/mainline/v${required_version}/ | grep "linux-headers" | awk -F'\">' '/all.deb/{print $2}' | cut -d'<' -f1 | head -1 | cut -d'/' -f2`
 		headers_all_url="http://kernel.ubuntu.com/~kernel-ppa/mainline/v${required_version}/${bit}/${headers_all_name}"
-		headers_bit_name=`wget -qO- http://kernel.ubuntu.com/~kernel-ppa/mainline/v${required_version}/ | grep "linux-headers" | grep "lowlatency" | awk -F'\">' '/amd64.deb/{print $2}' | cut -d'<' -f1 | head -1 | cut -d'/' -f2`
+		headers_bit_name=`wget --no-check-certificate http://kernel.ubuntu.com/~kernel-ppa/mainline/v${required_version}/ | grep "linux-headers" | grep "lowlatency" | awk -F'\">' '/amd64.deb/{print $2}' | cut -d'<' -f1 | head -1 | cut -d'/' -f2`
 		headers_bit_url="http://kernel.ubuntu.com/~kernel-ppa/mainline/v${required_version}/${bit}/${headers_bit_name}"
 	elif [[ "${bit}" = "i386" ]]; then
-		image_name=`wget -qO- http://kernel.ubuntu.com/~kernel-ppa/mainline/v${required_version}/ | grep "linux-image" | grep "lowlatency" | awk -F'\">' '/i386.deb/{print $2}' | cut -d'<' -f1 | head -1 | cut -d'/' -f2`
+		image_name=`wget --no-check-certificate http://kernel.ubuntu.com/~kernel-ppa/mainline/v${required_version}/ | grep "linux-image" | grep "lowlatency" | awk -F'\">' '/i386.deb/{print $2}' | cut -d'<' -f1 | head -1 | cut -d'/' -f2`
 		image_url="http://kernel.ubuntu.com/~kernel-ppa/mainline/v${required_version}/${bit}/${image_name}"
-		headers_all_name=`wget -qO- http://kernel.ubuntu.com/~kernel-ppa/mainline/v${required_version}/ | grep "linux-headers" | awk -F'\">' '/all.deb/{print $2}' | cut -d'<' -f1 | head -1 | cut -d'/' -f2`
+		headers_all_name=`wget --no-check-certificate http://kernel.ubuntu.com/~kernel-ppa/mainline/v${required_version}/ | grep "linux-headers" | awk -F'\">' '/all.deb/{print $2}' | cut -d'<' -f1 | head -1 | cut -d'/' -f2`
 		headers_all_url="http://kernel.ubuntu.com/~kernel-ppa/mainline/v${required_version}/${bit}/${headers_all_name}"
-		headers_bit_name=`wget -qO- http://kernel.ubuntu.com/~kernel-ppa/mainline/v${required_version}/ | grep "linux-headers" | grep "lowlatency" | awk -F'\">' '/i386.deb/{print $2}' | cut -d'<' -f1 | head -1 | cut -d'/' -f2`
+		headers_bit_name=`wget --no-check-certificate http://kernel.ubuntu.com/~kernel-ppa/mainline/v${required_version}/ | grep "linux-headers" | grep "lowlatency" | awk -F'\">' '/i386.deb/{print $2}' | cut -d'<' -f1 | head -1 | cut -d'/' -f2`
 		headers_bit_url="http://kernel.ubuntu.com/~kernel-ppa/mainline/v${required_version}/${bit}/${headers_bit_name}"
 	else
 		echo -e "${Error} not support bit !" && exit 1
@@ -175,7 +175,7 @@ delete_surplus_headers(){
 install_image(){
 	if [[ -f "${image_name}" ]]; then
 		 echo -e "${Info} deb file exist"
-	else echo -e "${Info} downloading image" && wget ${image_url}
+	else echo -e "${Info} downloading image" && wget --no-check-certificate ${image_url}
 	fi
 	if [[ -f "${image_name}" ]]; then
 		 echo -e "${Info} installing image" && dpkg -i ${image_name}
@@ -186,7 +186,7 @@ install_image(){
 install_headers(){
 	if [[ -f ${headers_all_name} ]]; then
 		 echo -e "${Info} deb file exist"
-	else echo -e "${Info} downloading headers_all" && wget ${headers_all_url}
+	else echo -e "${Info} downloading headers_all" && wget --no-check-certificate ${headers_all_url}
 	fi
 	if [[ -f ${headers_all_name} ]]; then
 		 echo -e "${Info} installing headers_all" && dpkg -i ${headers_all_name}
@@ -195,7 +195,7 @@ install_headers(){
 
 	if [[ -f ${headers_bit_name} ]]; then
 		 echo -e "${Info} deb file exist"
-	else echo -e "${Info} downloading headers_bit" && wget ${headers_bit_url}
+	else echo -e "${Info} downloading headers_bit" && wget --no-check-certificate ${headers_bit_url}
 	fi
 	if [[ -f ${headers_bit_name} ]]; then
 		 echo -e "${Info} installing headers_bit" && dpkg -i ${headers_bit_name}
