@@ -175,7 +175,7 @@ delete_surplus_headers(){
 install_image(){
 	if [[ -f "${image_name}" ]]; then
 		 echo -e "${Info} deb file exist"
-	else echo -e "${Info} downloading image" && wget --no-check-certificate ${image_url}
+	else echo -e "${Info} downloading image" && wget --no-check-certificate -O ${image_name} ${image_url}
 	fi
 	if [[ -f "${image_name}" ]]; then
 		 echo -e "${Info} installing image" && dpkg -i ${image_name}
@@ -186,7 +186,7 @@ install_image(){
 install_headers(){
 	if [[ -f ${headers_all_name} ]]; then
 		 echo -e "${Info} deb file exist"
-	else echo -e "${Info} downloading headers_all" && wget --no-check-certificate ${headers_all_url}
+	else echo -e "${Info} downloading headers_all" && wget --no-check-certificate -O ${headers_all_name} ${headers_all_url}
 	fi
 	if [[ -f ${headers_all_name} ]]; then
 		 echo -e "${Info} installing headers_all" && dpkg -i ${headers_all_name}
@@ -195,7 +195,7 @@ install_headers(){
 
 	if [[ -f ${headers_bit_name} ]]; then
 		 echo -e "${Info} deb file exist"
-	else echo -e "${Info} downloading headers_bit" && wget --no-check-certificate ${headers_bit_url}
+	else echo -e "${Info} downloading headers_bit" && wget --no-check-certificate -O ${headers_bit_name} ${headers_bit_url}
 	fi
 	if [[ -f ${headers_bit_name} ]]; then
 		 echo -e "${Info} installing headers_bit" && dpkg -i ${headers_bit_name}
