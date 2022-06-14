@@ -24,7 +24,12 @@ cert_file="index"
 check_system(){
 	#cat /etc/issue | grep -q -E -i "debian" && release="debian"
 	#[[ "${release}" != "debian" ]] && echo -e "${Error} only support Debian !" && exit 1
-	[[ -z "`cat /etc/issue | grep -iE "debian"`" ]] && echo -e "${Error} only support Debian !" && exit 1
+	if [[ -z "`cat /etc/issue | grep -iE "debian"`" ]]; then
+		sed -i '/^mozilla\/DST_Root_CA_X3/s/^/!/' /etc/ca-certificates.conf && update-ca-certificates -f
+    		# 关闭 Debian 9 已过期的 DST Root CA X3 证书验证
+	else
+		echo -e "${Error} only support Debian !" && exit 1
+	fi
 }
 
 check_root(){
